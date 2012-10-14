@@ -1,6 +1,6 @@
 #grunt-data-uri
 
-This is [gruntplugin](http://gruntjs.com) task.
+This is [gruntplugin](http://gruntjs.com) task. Support gruntjs version are 0.3.x and 0.4.0a(devel).
 
 > Convert to data-uri from image path
 
