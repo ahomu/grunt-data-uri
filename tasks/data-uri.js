@@ -90,7 +90,7 @@ module.exports = function(grunt) {
       // both toDir and fromDir are same base.
     }
     else if (fromDir.indexOf(toDir) === 0) {
-      // fromDir is shalow than toDir
+      // fromDir is shallow than toDir
       path.relative(fromDir, toDir).split('/').forEach(function() {
         resolvedPath = resolvedPath.replace(/^\.\.\//, '');
       });
