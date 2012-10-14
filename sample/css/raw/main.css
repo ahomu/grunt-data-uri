@@ -1,0 +1,2 @@
+body { background-image: url('../../img/embed/will_encode.jpeg'); }
+div { background-image: url('../../img/not_encode.png'); }

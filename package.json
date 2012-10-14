@@ -1,0 +1,36 @@
+{
+  "name": "grunt-data-uri",
+  "version": "0.0.1",
+  "description": "Convert to data-uri from image path.",
+  "keywords": [
+    "gruntplugin",
+    "image",
+    "data-uri",
+    "base64",
+    "encode"
+  ],
+  "homepage": "https://github.com/ahomu/grunt-data-uri",
+  "bugs": "https://github.com/ahomu/grunt-data-uri/issues",
+  "author": {
+    "name": "Ayumu Sato",
+    "email": "mail@ayumusato.com",
+    "url": "http://aho.mu"
+  },
+  "main": "grunt.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ahomu/grunt-data-uri.git"
+  },
+  "dependencies": {
+    "mime": "~1.2.7"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.16" // grunt devel branch(0.4.0a) also support
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "licenses": {
+    "type": "MIT"
+  }
+}
