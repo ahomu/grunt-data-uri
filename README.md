@@ -35,7 +35,7 @@ grunt.initConfig({
         // specified files are only encoding
         target: ['sample/img/embed/*.*'],
         // adjust relative path?
-        adjustLevel: true
+        fixDirLevel: true
       }
     }
   }
