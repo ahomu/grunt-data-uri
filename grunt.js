@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  'use strict';
 
   // Project configuration.
   grunt.initConfig({
@@ -46,6 +47,6 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'dataUri');
+  grunt.registerTask('default', 'lint dataUri');
 
 };
