@@ -8,9 +8,11 @@
  */
 module.exports = function(grunt) {
 
+  'use strict';
+
   var fs      = require('fs'),
       path    = require('path'),
-      mime    = require("mime");
+      datauri = require("datauri");
 
   var RE_CSS_URLFUNC = /(?:url\(["']?)(.*?)(?:["']?\))/,
       util = grunt.util || grunt.utils, // for 0.4.0
@@ -51,8 +53,7 @@ module.exports = function(grunt) {
         // Assume file existing cause found from haystack
         if (haystack.indexOf(needle) !== -1) {
           // Encoding to Data uri
-          src = fs.readFileSync(u),
-          replacement = base64encode(mime.lookup(u), src);
+          replacement = datauri(u);
 
           grunt.log.ok('Encode: '+u);
         } else {
@@ -104,13 +105,4 @@ module.exports = function(grunt) {
     return resolvedPath;
   }
 
-  /**
-   * @method base64encode
-   * @param {String} mime
-   * @param {ImageData} src
-   * @return {String} data URI(base64)
-   */
-  function base64encode(mime, src) {
-    return 'data:' + mime + ';base64,' + src.toString('base64');
-  }
 };
