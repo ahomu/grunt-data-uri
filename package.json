@@ -1,6 +1,6 @@
 {
   "name": "grunt-data-uri",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert to data-uri from image path.",
   "keywords": [
     "gruntplugin",
@@ -22,7 +22,7 @@
     "url": "git://github.com/ahomu/grunt-data-uri.git"
   },
   "dependencies": {
-    "mime": "~1.2.7"
+    "datauri": ">= 0.1"
   },
   "devDependencies": {
     "grunt": "~0.3.16"
