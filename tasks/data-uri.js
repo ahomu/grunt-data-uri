@@ -29,11 +29,19 @@ module.exports = function(grunt) {
     srcFiles.forEach(function(src) {
       var content = grunt.file.read(src),
           matches = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
-          uris = util._.uniq(matches.map(function(m) {
-            return m.match(RE_CSS_URLFUNC)[1];
-          })),
           baseSrc = path.resolve(path.dirname(src)),
-          outputTo = destDir+'/'+path.basename(src);
+          outputTo = destDir+'/'+path.basename(src),
+          uris;
+
+      if (!matches) {
+        grunt.log.subhead('file uri not found on '+src);
+        grunt.log.ok('Skipped');
+        return;
+      }
+
+      uris = util._.uniq(matches.map(function(m) {
+        return m.match(RE_CSS_URLFUNC)[1];
+      }));
 
       // Change base to src(css, html, js) existing dir
       grunt.file.setBase(baseSrc);
@@ -43,7 +51,7 @@ module.exports = function(grunt) {
         return !u.match('(data:|http)');
       });
 
-      grunt.log.subhead('SRC: '+uris.length+' file uri found on '+src);
+      grunt.log.subhead(uris.length+' file uri found on '+src);
 
       // Process urls
       uris.forEach(function(u) {
