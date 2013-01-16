@@ -12,7 +12,7 @@ Install from npm.
 % npm install grunt-data-uri
 ```
 
-Add your project's `grunt.js` (`Gruntfile.js` when ~0.4.0a).
+Add your project's `grunt.js` (`Gruntfile.js` when ~0.4.0rc5).
 
 ```javascript
 grunt.loadNpmTasks('grunt-data-uri');
@@ -35,12 +35,16 @@ grunt.initConfig({
         // specified files are only encoding
         target: ['sample/img/embed/*.*'],
         // adjust relative path?
-        fixDirLevel: true
+        fixDirLevel: true,
+        // img detecting base dir
+        // baseDir: './'
       }
     }
   }
 }
 ```
+
+For traversal image files. If `options.baseDir` is specified, use `baseDir` instead of *src css exsting dir*. That's useful when image paths in your css are absolute.
 
 ###Before `sample/css/raw/main.css`
 
@@ -77,3 +81,12 @@ body { background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAAAQA...');
 /* not encoded but adjust relative path! */
 div { background-image: url('../img/not_encode.png'); }
 ```
+
+##Changelog
+
++ 0.1.0
+  + Add `baseDir` option
++ 0.0.2
+  + Add `datauri` module
++ 0.0.1
+  + first commit

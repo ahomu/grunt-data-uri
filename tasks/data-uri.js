@@ -12,51 +12,77 @@ module.exports = function(grunt) {
 
   var fs      = require('fs'),
       path    = require('path'),
-      datauri = require("datauri");
+      datauri = require('datauri');
 
   var RE_CSS_URLFUNC = /(?:url\(["']?)(.*?)(?:["']?\))/,
       util = grunt.util || grunt.utils, // for 0.4.0
-      baseGrunt = path.resolve('./');
+      gruntfileDir = path.resolve('./'),
+      expandFiles = grunt.file.expandFiles ?
+        function(files) {
+          return grunt.file.expandFiles(files);
+        }:
+        function(files) {
+          return grunt.file.expand({filter: 'isFile'}, files);
+        };
 
   grunt.registerMultiTask('dataUri', 'Convert your css file image path!!', function() {
     // @memo this.file(0.3.x), this.files(0.4.0a) -> safe using this.data.src|dest
 
     var options  = this.options ? this.options() : this.data.options, // for 0.4.0
-        srcFiles = grunt.file.expandFiles(this.data.src),
+        srcFiles = expandFiles(this.data.src),
         destDir  = path.resolve(this.data.dest),
-        haystack = grunt.file.expandFiles(options.target);
+        haystack = [];
+
+    expandFiles(options.target).forEach(function(imgPath) {
+      haystack.push(path.resolve(imgPath));
+    });
 
     srcFiles.forEach(function(src) {
-      var content = grunt.file.read(src),
-          matches = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
-          baseSrc = path.resolve(path.dirname(src)),
+      var content  = grunt.file.read(src),
+          matches  = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
           outputTo = destDir+'/'+path.basename(src),
+          baseDir,
           uris;
 
+      // Detect baseDir for using traversal image files
+      baseDir = options.baseDir ? path.resolve(options.baseDir)    // specified base dir
+                                : path.resolve(path.dirname(src)); // detected from src
+
+      // Not found image path
       if (!matches) {
-        grunt.log.subhead('file uri not found on '+src);
+        grunt.log.subhead('SRC: file uri not found on '+src);
+        grunt.file.write(outputTo, content);
         grunt.log.ok('Skipped');
+        grunt.log.ok('=> ' + outputTo);
         return;
       }
 
+      // Change base to src(css, html, js) existing dir
+      grunt.file.setBase(baseDir);
+
+      // List uniq image URIs
       uris = util._.uniq(matches.map(function(m) {
         return m.match(RE_CSS_URLFUNC)[1];
       }));
 
-      // Change base to src(css, html, js) existing dir
-      grunt.file.setBase(baseSrc);
-
-      // Not external http resource
+      // Exclude external http resource
       uris = uris.filter(function(u) {
         return !u.match('(data:|http)');
       });
 
-      grunt.log.subhead(uris.length+' file uri found on '+src);
+      grunt.log.subhead('SRC: '+uris.length+' file uri found on '+src);
 
       // Process urls
       uris.forEach(function(u) {
-        var src, replacement,
-            needle = path.resolve(u).slice((baseGrunt+'/').length);
+        var src, replacement, needle;
+
+        // To current dir when specified uri is like root
+        if (u.indexOf('/') === 0) {
+          u = '.' + u;
+        }
+
+        // Resolve image realpath
+        needle = path.resolve(u);
 
         // Assume file existing cause found from haystack
         if (haystack.indexOf(needle) !== -1) {
@@ -67,7 +93,7 @@ module.exports = function(grunt) {
         } else {
           if (options.fixDirLevel) {
             // Diff of directory level
-            replacement =  adjustDirectoryLevel(u, destDir, baseSrc);
+            replacement =  adjustDirectoryLevel(u, destDir, baseDir);
             grunt.log.ok('Adjust: '+ u + ' -> ' + replacement);
           } else {
             replacement = u;
@@ -79,7 +105,7 @@ module.exports = function(grunt) {
       });
 
       // Revert base to gruntjs executing current dir
-      grunt.file.setBase(baseGrunt);
+      grunt.file.setBase(gruntfileDir);
       grunt.file.write(outputTo, content);
       grunt.log.ok('=> ' + outputTo);
     });
@@ -93,7 +119,8 @@ module.exports = function(grunt) {
    * @return {String} resolvedPath
    */
   function adjustDirectoryLevel(relativePath, toDir, fromDir) {
-    var resolvedPath = relativePath;
+    // fix ../path/to/img.jpg to path/to/img.jpg
+    var resolvedPath = relativePath.replace(/^\.\//, '');
 
     if (toDir === fromDir) {
       // both toDir and fromDir are same base.
