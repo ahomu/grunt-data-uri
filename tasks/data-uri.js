@@ -17,13 +17,15 @@ module.exports = function(grunt) {
   var RE_CSS_URLFUNC = /(?:url\(["']?)(.*?)(?:["']?\))/,
       util = grunt.util || grunt.utils, // for 0.4.0
       gruntfileDir = path.resolve('./'),
-      expandFiles = grunt.file.expandFiles ?
-        function(files) {
-          return grunt.file.expandFiles(files);
-        }:
-        function(files) {
-          return grunt.file.expand({filter: 'isFile'}, files);
-        };
+      expandFiles;
+
+  if (grunt.file.expandFiles) {
+    expandFiles = grunt.file.expandFiles;
+  } else {
+    expandFiles = function(files) {
+      return grunt.file.expand({filter: 'isFile'}, files);
+    };
+  }
 
   grunt.registerMultiTask('dataUri', 'Convert your css file image path!!', function() {
     // @memo this.file(0.3.x), this.files(0.4.0a) -> safe using this.data.src|dest
@@ -73,35 +75,33 @@ module.exports = function(grunt) {
       grunt.log.subhead('SRC: '+uris.length+' file uri found on '+src);
 
       // Process urls
-      uris.forEach(function(u) {
-        var src, replacement, needle;
+      uris.forEach(function(uri) {
+        var src, replacement, needle, fixedUri;
 
-        // To current dir when specified uri is like root
-        if (u.indexOf('/') === 0) {
-          u = '.' + u;
-        }
+        // fixed current dir when specified uri is like root
+        fixedUri = uri.indexOf('/') === 0 ? '.' + uri : uri;
 
         // Resolve image realpath
-        needle = path.resolve(u);
+        needle = path.resolve(fixedUri);
 
         // Assume file existing cause found from haystack
         if (haystack.indexOf(needle) !== -1) {
           // Encoding to Data uri
-          replacement = datauri(u);
+          replacement = datauri(needle);
 
-          grunt.log.ok('Encode: '+u);
+          grunt.log.ok('Encode: '+needle);
         } else {
           if (options.fixDirLevel) {
             // Diff of directory level
-            replacement =  adjustDirectoryLevel(u, destDir, baseDir);
-            grunt.log.ok('Adjust: '+ u + ' -> ' + replacement);
+            replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
+            grunt.log.ok('Adjust: '+ uri + ' -> ' + replacement);
           } else {
             replacement = u;
-            grunt.log.ok('Ignore: '+ u);
+            grunt.log.ok('Ignore: '+ uri);
           }
         }
 
-        content = content.replace(new RegExp(u, 'g'), replacement);
+        content = content.replace(new RegExp(uri, 'g'), replacement);
       });
 
       // Revert base to gruntjs executing current dir
