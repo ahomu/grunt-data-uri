@@ -96,7 +96,7 @@ module.exports = function(grunt) {
             replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
             grunt.log.ok('Adjust: '+ uri + ' -> ' + replacement);
           } else {
-            replacement = u;
+            replacement = uri;
             grunt.log.ok('Ignore: '+ uri);
           }
         }
