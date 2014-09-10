@@ -1,6 +1,6 @@
 #grunt-data-uri
 
-This is [gruntplugin](http://gruntjs.com) task. Support gruntjs version are 0.3.x and 0.4.0a(devel).
+This is [gruntplugin](http://gruntjs.com) task.
 
 > Convert to data-uri from image path
 
@@ -12,7 +12,7 @@ Install from npm.
 % npm install grunt-data-uri
 ```
 
-Add your project's `grunt.js` (`Gruntfile.js` when ~0.4.0rc5).
+Add your project's `Gruntfile.js`.
 
 ```javascript
 grunt.loadNpmTasks('grunt-data-uri');
@@ -57,7 +57,7 @@ For traversal image files. If `options.baseDir` is specified, use `baseDir` inst
 This file is raw css.
 
 ```css
-body { background-image: url('../../img/embed/will_encode.jpeg'); }
+html { background-image: url('../../img/embed/will_encode.jpeg'); }
 body { background-image: url('../../img/embed/not_encode.jpeg'); }
 div  { background-image: url('../../img/not_encode.png'); }
 ```
@@ -85,11 +85,11 @@ This file is processed and output css.
 
 ```css
 /* encoded to data-uri(base64) */
-body { background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAAAQA...'); }
+html { background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAAAQA...'); }
 /* not encoded too large image */
 body { background-image: url('../../img/embed/not_encode.jpeg'); }
 /* not encoded but adjust relative path! */
-div { background-image: url('../img/not_encode.png'); }
+div  { background-image: url('../img/not_encode.png'); }
 ```
 
 ##Changelog
