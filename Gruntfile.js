@@ -10,7 +10,8 @@ module.exports = function(grunt) {
         dest: 'sample/css',
         options: {
           target: ['sample/img/embed/*.*'],
-          fixDirLevel: true
+          fixDirLevel: true,
+          maxBytes: 10240
         }
       }
     }

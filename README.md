@@ -58,7 +58,8 @@ This file is raw css.
 
 ```css
 body { background-image: url('../../img/embed/will_encode.jpeg'); }
-div { background-image: url('../../img/not_encode.png'); }
+body { background-image: url('../../img/embed/not_encode.jpeg'); }
+div  { background-image: url('../../img/not_encode.png'); }
 ```
 
 ###Execute
@@ -69,8 +70,9 @@ Execute grunt-data-uri
 % grunt dataUri
 Running "dataUri:dist" (dataUri) task
 
-SRC: 2 file uri found on sample/css/raw/main.css
+SRC: 3 file uri found on sample/css/raw/main.css
 >> Encode: ../../img/embed/will_encode.jpeg
+>> Skipping (size 24875 > 10240): ../../img/embed/not_encode.jpeg
 >> Adjust: ../../img/not_encode.png -> ../img/not_encode.png
 >> => path/to/project/sample/css/main.css
 
@@ -84,12 +86,17 @@ This file is processed and output css.
 ```css
 /* encoded to data-uri(base64) */
 body { background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAAAQA...'); }
+/* not encoded too large image */
+body { background-image: url('../../img/embed/not_encode.jpeg'); }
 /* not encoded but adjust relative path! */
 div { background-image: url('../img/not_encode.png'); }
 ```
 
 ##Changelog
 
++ 0.2.0
+  + Add `maxBytes` option
+  + fix `fixDirLevel` bug
 + 0.1.0
   + Add `baseDir` option
 + 0.0.2
