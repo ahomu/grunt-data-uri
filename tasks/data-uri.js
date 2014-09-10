@@ -91,6 +91,7 @@ module.exports = function(grunt) {
           if (options.maxBytes && fileSize > options.maxBytes) {
             // file is over the max size
             grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes +'): ' + uri);
+            return;
           } else {
             // Encoding to Data uri
             replacement = datauri(needle);
