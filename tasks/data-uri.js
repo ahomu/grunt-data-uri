@@ -159,7 +159,7 @@ module.exports = function(grunt) {
       });
     }
     else if (toDir.indexOf(fromDir) === 0 ) {
-      // toDir is depp than fromDir
+      // toDir is deep than fromDir
       path.relative(fromDir, toDir).split('/').forEach(function() {
         resolvedPath = '../'+resolvedPath;
       });
