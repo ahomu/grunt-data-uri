@@ -38,6 +38,12 @@ grunt.initConfig({
         fixDirLevel: true,
         // img detecting base dir
         // baseDir: './'
+
+        // Do not inline any images larger
+        // than this size. 2048 is a size
+        // recommended by Google's mod_pagespeed.
+        maxBytes : 2048
+
       }
     }
   }
