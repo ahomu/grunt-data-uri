@@ -25,7 +25,7 @@
     "datauri": ">= 0.1"
   },
   "devDependencies": {
-    "grunt": "~0.3.16"
+    "grunt": "~0.4.1"
   },
   "engines": {
     "node": ">=0.8.0"

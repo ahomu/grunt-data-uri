@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       datauri = require('datauri');
 
   var RE_CSS_URLFUNC = /(?:url\(["']?)(.*?)(?:["']?\))/,
-      util = grunt.util || grunt.utils, // for 0.4.0
+      util = grunt.util,
       gruntfileDir = path.resolve('./'),
       expandFiles;
 
@@ -28,9 +28,8 @@ module.exports = function(grunt) {
   }
 
   grunt.registerMultiTask('dataUri', 'Convert your css file image path!!', function() {
-    // @memo this.file(0.3.x), this.files(0.4.0a) -> safe using this.data.src|dest
 
-    var options  = this.options ? this.options() : this.data.options, // for 0.4.0
+    var options  = this.options(),
         srcFiles = expandFiles(this.data.src),
         destDir  = path.resolve(this.data.dest),
         haystack = [];
