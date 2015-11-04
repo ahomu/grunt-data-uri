@@ -109,7 +109,8 @@ module.exports = function(grunt) {
           }
         }
 
-        content = content.replace(new RegExp(uri, 'g'), replacement);
+        var escapedUri = uri.replace(/\?/g, '\\$&');
+        content = content.replace(new RegExp(escapedUri, 'g'), replacement);
       });
 
       // Revert base to gruntjs executing current dir
