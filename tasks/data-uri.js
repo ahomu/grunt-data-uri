@@ -78,7 +78,7 @@ module.exports = function(grunt) {
         var src, replacement, needle, fixedUri;
 
         // fixed current dir when specified uri is like root
-        fixedUri = uri.indexOf('/') === 0 ? '.' + uri : uri;
+        fixedUri = (uri.indexOf('/') === 0 ? '.' + uri : uri).split('?')[0].split('#')[0];
 
         // Resolve image realpath
         needle = path.resolve(fixedUri);
