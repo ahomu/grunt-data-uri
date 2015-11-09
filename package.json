@@ -22,7 +22,7 @@
     "url": "git://github.com/ahomu/grunt-data-uri.git"
   },
   "dependencies": {
-    "datauri": ">= 0.1"
+    "datauri": "~0.8.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1"
