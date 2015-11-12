@@ -23,14 +23,16 @@
     "url": "git://github.com/ahomu/grunt-data-uri.git"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "contributors": "grunt contributors"
   },
   "dependencies": {
     "datauri": "~0.8.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "grunt-cli": "^0.1.13"
+    "grunt-cli": "^0.1.13",
+    "grunt-git-contributors": "^0.1.5"
   },
   "engines": {
     "node": ">=0.10.0"

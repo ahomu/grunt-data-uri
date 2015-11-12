@@ -14,11 +14,21 @@ module.exports = function(grunt) {
           maxBytes: 10240
         }
       }
+    },
+    contributors: {
+      dist: {
+        path: 'AUTHORS',
+        branch: 'development',
+        chronologically: false
+      }
     }
   });
 
   // Load local tasks.
   grunt.loadTasks('tasks');
+
+  // Load npm tasks.
+  grunt.loadNpmTasks('grunt-git-contributors');
 
   // Default task.
   grunt.registerTask('default', 'dataUri');
