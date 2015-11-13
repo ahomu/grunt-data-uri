@@ -6,10 +6,10 @@ module.exports = function(grunt) {
     // sample configuration
     dataUri: {
       dist: {
-        src: ['sample/css/raw/*.css'],
-        dest: 'sample/css',
+        src: ['test/fixtures/*.css'],
+        dest: 'test',
         options: {
-          target: ['sample/img/embed/*.*'],
+          target: ['test/img/embed/*.*'],
           fixDirLevel: true,
           maxBytes: 10240
         }
