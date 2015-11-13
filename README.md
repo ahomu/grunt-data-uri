@@ -1,15 +1,17 @@
-#grunt-data-uri
+# grunt-data-uri
+
+[![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
 This is [gruntplugin](http://gruntjs.com) task.
 
 > Convert to data-uri from image path
 
-##Getting Started
+## Getting Started
 
 Install from npm.
 
 ```
-% npm install grunt-data-uri
+% npm i -D grunt-data-uri
 ```
 
 Add your project's `Gruntfile.js`.
@@ -18,9 +20,9 @@ Add your project's `Gruntfile.js`.
 grunt.loadNpmTasks('grunt-data-uri');
 ```
 
-##Example
+## Example
 
-###Config
+### Config
 
 ```javascript
 grunt.initConfig({
@@ -52,7 +54,7 @@ grunt.initConfig({
 
 For traversal image files. If `options.baseDir` is specified, use `baseDir` instead of *src css exsting dir*. That's useful when image paths in your css are absolute.
 
-###Before `sample/css/raw/main.css`
+### Before `sample/css/raw/main.css`
 
 This file is raw css.
 
@@ -62,7 +64,7 @@ body { background-image: url('../../img/embed/not_encode.jpeg'); }
 div  { background-image: url('../../img/not_encode.png'); }
 ```
 
-###Execute
+### Execute
 
 Execute grunt-data-uri
 
@@ -79,7 +81,7 @@ SRC: 3 file uri found on sample/css/raw/main.css
 Done, without errors.
 ```
 
-###After `sample/css/main.css`
+### After `sample/css/main.css`
 
 This file is processed and output css.
 
@@ -92,7 +94,14 @@ body { background-image: url('../../img/embed/not_encode.jpeg'); }
 div  { background-image: url('../img/not_encode.png'); }
 ```
 
-##Changelog
+## Tests
+
+```
+npm install
+npm test
+```
+
+## Changelog
 
 + 0.2.0
   + Add `maxBytes` option
@@ -103,3 +112,14 @@ div  { background-image: url('../img/not_encode.png'); }
   + Add `datauri` module
 + 0.0.1
   + first commit
+
+## License
+
+MIT
+
+[npm-image]: https://img.shields.io/npm/v/grunt-data-uri.svg
+[npm-url]: https://npmjs.org/package/grunt-data-uri
+[circle-image]: https://circleci.com/gh/ahomu/grunt-data-uri.svg?style=shield&circle-token=70d7bb05af15f1464e583704a4ee117664b49dc8
+[circle-url]: https://circleci.com/gh/ahomu/grunt-data-uri
+[deps-image]: https://david-dm.org/ahomu/grunt-data-uri.svg
+[deps-url]: https://david-dm.org/ahomu/grunt-data-uri
