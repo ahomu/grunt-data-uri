@@ -6,19 +6,29 @@ module.exports = function(grunt) {
     // sample configuration
     dataUri: {
       dist: {
-        src: ['sample/css/raw/*.css'],
-        dest: 'sample/css',
+        src: ['test/fixtures/*.css'],
+        dest: 'test',
         options: {
-          target: ['sample/img/embed/*.*'],
+          target: ['test/img/embed/*.*'],
           fixDirLevel: true,
           maxBytes: 10240
         }
+      }
+    },
+    contributors: {
+      dist: {
+        path: 'AUTHORS',
+        branch: 'development',
+        chronologically: false
       }
     }
   });
 
   // Load local tasks.
   grunt.loadTasks('tasks');
+
+  // Load npm tasks.
+  grunt.loadNpmTasks('grunt-git-contributors');
 
   // Default task.
   grunt.registerTask('default', 'dataUri');

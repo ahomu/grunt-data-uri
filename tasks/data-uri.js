@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 
       // Process urls
       uris.forEach(function(uri) {
-        var src, replacement, needle, fixedUri;
+        var replacement, needle, fixedUri;
 
         // fixed current dir when specified uri is like root
         fixedUri = (uri.indexOf('/') === 0 ? '.' + uri : uri).split('?')[0].split('#')[0];
