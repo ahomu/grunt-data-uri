@@ -103,6 +103,9 @@ npm test
 
 ## Changelog
 
++ 0.3.0
+  + Update `data-uri` module
+  + Remove query and hash fragment from url
 + 0.2.0
   + Add `maxBytes` option
   + fix `fixDirLevel` bug
