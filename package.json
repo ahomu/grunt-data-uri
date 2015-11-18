@@ -23,7 +23,7 @@
     "url": "git://github.com/ahomu/grunt-data-uri.git"
   },
   "scripts": {
-    "test": "grunt",
+    "test": "grunt && node test/assertion.js",
     "contributors": "grunt contributors"
   },
   "dependencies": {
