@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 
   var fs       = require('fs'),
       path     = require('path'),
-      datauri  = require('datauri');
+      datauri  = require('datauri').sync;
 
   var RE_CSS_URLFUNC = /(?:url\(["']?)(.*?)(?:["']?\))/,
       util = grunt.util,

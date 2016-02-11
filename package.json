@@ -27,7 +27,7 @@
     "contributors": "grunt contributors"
   },
   "dependencies": {
-    "datauri": "~0.8.0"
+    "datauri": "~1.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
