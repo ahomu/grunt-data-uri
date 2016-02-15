@@ -88,22 +88,22 @@ module.exports = function(grunt) {
           var fileSize = getFileSize(needle);
           if (options.maxBytes && fileSize > options.maxBytes) {
             // file is over the max size
-            grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes +'): ' + uri);
+            grunt.verbose.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes +'): ' + uri);
             return;
           } else {
             // Encoding to Data uri
             replacement = datauri(needle);
 
-            grunt.log.ok('Encode: '+needle);
+            grunt.verbose.ok('Encode: '+needle);
           }
         } else {
           if (options.fixDirLevel) {
             // Diff of directory level
             replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
-            grunt.log.ok('Adjust: '+ uri + ' -> ' + replacement);
+            grunt.verbose.ok('Adjust: '+ uri + ' -> ' + replacement);
           } else {
             replacement = uri;
-            grunt.log.ok('Ignore: '+ uri);
+            grunt.verbose.ok('Ignore: '+ uri);
           }
         }
 
