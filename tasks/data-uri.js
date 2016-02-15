@@ -51,10 +51,10 @@ module.exports = function(grunt) {
 
       // Not found image path
       if (!matches) {
-        grunt.log.subhead('SRC: file uri not found on '+src);
+        grunt.verbose.subhead('SRC: file uri not found on '+src);
         grunt.file.write(outputTo, content);
-        grunt.log.ok('Skipped');
-        grunt.log.ok('=> ' + outputTo);
+        grunt.verbose.ok('Skipped');
+        grunt.verbose.ok('=> ' + outputTo);
         return;
       }
 
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         return !u.match('(data:|http)');
       });
 
-      grunt.log.subhead('SRC: '+uris.length+' file uri found on '+src);
+      grunt.verbose.subhead('SRC: '+uris.length+' file uri found on '+src);
 
       // Process urls
       uris.forEach(function(uri) {
@@ -88,22 +88,22 @@ module.exports = function(grunt) {
           var fileSize = getFileSize(needle);
           if (options.maxBytes && fileSize > options.maxBytes) {
             // file is over the max size
-            grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes +'): ' + uri);
+            grunt.verbose.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes +'): ' + uri);
             return;
           } else {
             // Encoding to Data uri
             replacement = datauri(needle);
 
-            grunt.log.ok('Encode: '+needle);
+            grunt.verbose.ok('Encode: '+needle);
           }
         } else {
           if (options.fixDirLevel) {
             // Diff of directory level
             replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
-            grunt.log.ok('Adjust: '+ uri + ' -> ' + replacement);
+            grunt.verbose.ok('Adjust: '+ uri + ' -> ' + replacement);
           } else {
             replacement = uri;
-            grunt.log.ok('Ignore: '+ uri);
+            grunt.verbose.ok('Ignore: '+ uri);
           }
         }
 
@@ -114,7 +114,7 @@ module.exports = function(grunt) {
       // Revert base to gruntjs executing current dir
       grunt.file.setBase(gruntfileDir);
       grunt.file.write(outputTo, content);
-      grunt.log.ok('=> ' + outputTo);
+      grunt.verbose.ok('=> ' + outputTo);
     });
   });
 
