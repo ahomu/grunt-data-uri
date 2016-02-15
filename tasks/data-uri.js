@@ -51,10 +51,10 @@ module.exports = function(grunt) {
 
       // Not found image path
       if (!matches) {
-        grunt.log.subhead('SRC: file uri not found on '+src);
+        grunt.verbose.subhead('SRC: file uri not found on '+src);
         grunt.file.write(outputTo, content);
-        grunt.log.ok('Skipped');
-        grunt.log.ok('=> ' + outputTo);
+        grunt.verbose.ok('Skipped');
+        grunt.verbose.ok('=> ' + outputTo);
         return;
       }
 
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         return !u.match('(data:|http)');
       });
 
-      grunt.log.subhead('SRC: '+uris.length+' file uri found on '+src);
+      grunt.verbose.subhead('SRC: '+uris.length+' file uri found on '+src);
 
       // Process urls
       uris.forEach(function(uri) {
@@ -114,7 +114,7 @@ module.exports = function(grunt) {
       // Revert base to gruntjs executing current dir
       grunt.file.setBase(gruntfileDir);
       grunt.file.write(outputTo, content);
-      grunt.log.ok('=> ' + outputTo);
+      grunt.verbose.ok('=> ' + outputTo);
     });
   });
 
