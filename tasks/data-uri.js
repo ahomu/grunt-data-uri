@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       var content   = grunt.file.read(src),
           matches   = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
           outputDir = destDir || path.dirname(src),
-          outputTo  = destDir + '/' + path.basename(src),
+          outputTo  = outputDir + '/' + path.basename(src),
           baseDir,
           uris;
 
