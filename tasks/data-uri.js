@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 
     var options  = this.options(),
         srcFiles = expandFiles(this.data.src),
-        destDir  = path.resolve(this.data.dest),
+        destDir  = this.data.dest && path.resolve(this.data.dest),
         haystack = [];
 
     expandFiles(options.target).forEach(function(imgPath) {
@@ -39,9 +39,10 @@ module.exports = function(grunt) {
     });
 
     srcFiles.forEach(function(src) {
-      var content  = grunt.file.read(src),
-          matches  = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
-          outputTo = destDir+'/'+path.basename(src),
+      var content   = grunt.file.read(src),
+          matches   = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
+          outputDir = destDir || path.dirname(src),
+          outputTo  = outputDir + '/' + path.basename(src),
           baseDir,
           uris;
 
@@ -99,7 +100,7 @@ module.exports = function(grunt) {
         } else {
           if (options.fixDirLevel) {
             // Diff of directory level
-            replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
+            replacement = adjustDirectoryLevel(fixedUri, outputDir, baseDir);
             grunt.log.ok('Adjust: '+ uri + ' -> ' + replacement);
           } else {
             replacement = uri;
