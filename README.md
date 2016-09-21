@@ -52,6 +52,28 @@ grunt.initConfig({
 }
 ```
 
+```javascript
+grunt.initConfig({
+  // sample configuration
+  dataUri: {
+    dist: {
+      // src file
+      src: ['sample/css/**/*.css'],
+      // output dir will be the same as css (overwrite)
+      options: {
+        // specified files are only encoding
+        target: ['sample/img/**/*.*'],
+        // Do not inline any images larger
+        // than this size. 2048 is a size
+        // recommended by Google's mod_pagespeed.
+        maxBytes : 2048
+
+      }
+    }
+  }
+}
+```
+
 For traversal image files. If `options.baseDir` is specified, use `baseDir` instead of *src css exsting dir*. That's useful when image paths in your css are absolute.
 
 ### Before `sample/css/raw/main.css`
