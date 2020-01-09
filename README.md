@@ -44,7 +44,19 @@ grunt.initConfig({
         // Do not inline any images larger
         // than this size. 2048 is a size
         // recommended by Google's mod_pagespeed.
-        maxBytes : 2048
+        maxBytes : 2048,
+
+        // Control the output of the script
+        log: {
+            skipped: true,
+            processBinaryFileTooBig: true,
+            processFileEncoded: true,
+            processFileAdjusted: true,
+            processBinaryFileIgnored: true
+        },
+
+        // Generates an error when a file is ignored
+        exitOnError: false
 
       }
     }

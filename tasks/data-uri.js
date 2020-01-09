@@ -49,26 +49,39 @@ module.exports = function(grunt) {
       baseDir = options.baseDir ? path.resolve(options.baseDir)    // specified base dir
                                 : path.resolve(path.dirname(src)); // detected from src
 
-      // Not found image path
-      if (!matches) {
-        grunt.log.subhead('SRC: file uri not found on '+src);
+
+      // List uniq image URIs
+      if (matches) {
+        uris = util._.uniq(matches.map(function(m) {
+          return m.match(RE_CSS_URLFUNC)[1];
+        }));
+
+        // Exclude external http resource
+        uris = uris.filter(function(u) {
+          return !u.match('(data:|http)');
+        });
+      }
+
+      // Not found image path or no file do process
+      if (!matches || !uris.length) {
         grunt.file.write(outputTo, content);
-        grunt.log.ok('Skipped');
-        grunt.log.ok('=> ' + outputTo);
+        if (!options.log || options.log.skipped !== false) {
+          grunt.log.subhead('SRC: file uri not found on '+src);
+          grunt.log.ok('Skipped');
+          grunt.log.ok('=> ' + outputTo);
+        }
         return;
       }
 
-      // List uniq image URIs
-      uris = util._.uniq(matches.map(function(m) {
-        return m.match(RE_CSS_URLFUNC)[1];
-      }));
-
-      // Exclude external http resource
-      uris = uris.filter(function(u) {
-        return !u.match('(data:|http)');
-      });
-
-      grunt.log.subhead('SRC: '+uris.length+' file uri found on '+src);
+      if (
+          !options.log ||
+          options.log.processBinaryFileTooBig !== false ||
+          options.log.processBinaryFileEncoded !== false ||
+          options.log.processBinaryFileAdjusted !== false ||
+          options.log.processBinaryFileIgnored !== false
+      ) {
+        grunt.log.subhead('SRC: ' + uris.length + ' file uri found on ' + src);
+      }
 
       // Process urls
       uris.forEach(function(uri) {
@@ -88,22 +101,31 @@ module.exports = function(grunt) {
           var fileSize = getFileSize(needle);
           if (options.maxBytes && fileSize > options.maxBytes) {
             // file is over the max size
-            grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes +'): ' + uri);
+            if (!options.log || options.log.processBinaryFileTooBig !== false) {
+              grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes + '): ' + uri);
+            }
             return;
           } else {
             // Encoding to Data uri
             replacement = datauri(needle);
 
-            grunt.log.ok('Encode: '+needle);
+            if (!options.log || options.log.processBinaryFileEncoded !== false) {
+              grunt.log.ok('Encode: ' + needle);
+            }
           }
         } else {
           if (options.fixDirLevel) {
             // Diff of directory level
             replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
-            grunt.log.ok('Adjust: '+ uri + ' -> ' + replacement);
+
+            if (!options.log || options.log.processBinaryFileAdjusted !== false) {
+              grunt.log.ok('Adjust: ' + uri + ' -> ' + replacement);
+            }
           } else {
             replacement = uri;
-            grunt.log.ok('Ignore: '+ uri);
+            if (!options.log || options.log.processBinaryFileIgnored !== false) {
+              (options.exitOnError === true ? grunt.fail.warn : grunt.log.ok)('Ignore: ' + uri);
+            }
           }
         }
 
@@ -114,7 +136,15 @@ module.exports = function(grunt) {
       // Revert base to gruntjs executing current dir
       grunt.file.setBase(gruntfileDir);
       grunt.file.write(outputTo, content);
-      grunt.log.ok('=> ' + outputTo);
+      if (
+          !options.log ||
+          options.log.processBinaryFileTooBig !== false ||
+          options.log.processBinaryFileEncoded !== false ||
+          options.log.processBinaryFileAdjusted !== false ||
+          options.log.processBinaryFileIgnored !== false
+      ) {
+        grunt.log.ok('=> ' + outputTo);
+      }
     });
   });
 
