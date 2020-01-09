@@ -50,8 +50,8 @@ grunt.initConfig({
         log: {
             skipped: true,
             processBinaryFileTooBig: true,
-            processFileEncoded: true,
-            processFileAdjusted: true,
+            processBinaryFileEncoded: true,
+            processBinaryFileAdjusted: true,
             processBinaryFileIgnored: true
         },
 
