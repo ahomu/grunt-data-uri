@@ -38,10 +38,14 @@ module.exports = function(grunt) {
       haystack.push(path.resolve(imgPath));
     });
 
+    var currentFileIndex = 0,
+    nbDigit = srcFiles.length.toString().length
     srcFiles.forEach(function(src) {
+      currentFileIndex++
       var content  = grunt.file.read(src),
+          prefix = options.prefixByNumber ? "0".repeat(nbDigit - currentFileIndex.toString().length) + currentFileIndex + "_" : "",
           matches  = content.match(new RegExp(RE_CSS_URLFUNC.source, 'g')),
-          outputTo = destDir+'/'+path.basename(src),
+          outputTo = destDir+'/'+ prefix +path.basename(src),
           baseDir,
           uris;
 
