@@ -77,16 +77,12 @@ module.exports = function(grunt) {
         return;
       }
 
-      if (
-          !options.log ||
-          options.log.processBinaryFileTooBig !== false ||
-          options.log.processBinaryFileEncoded !== false ||
-          options.log.processBinaryFileAdjusted !== false ||
-          options.log.processBinaryFileIgnored !== false
-      ) {
-        grunt.log.subhead('SRC: ' + uris.length + ' file uri found on ' + src);
-      }
-
+      var headPrinted = false,
+          printHead = function () {
+            if (headPrinted) return;
+            headPrinted = true
+            grunt.log.subhead('SRC: ' + uris.length + ' file uri found on ' + src);
+          }
       // Process urls
       uris.forEach(function(uri) {
         var replacement, needle, fixedUri;
@@ -106,6 +102,7 @@ module.exports = function(grunt) {
           if (options.maxBytes && fileSize > options.maxBytes) {
             // file is over the max size
             if (!options.log || options.log.processBinaryFileTooBig !== false) {
+              printHead()
               grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes + '): ' + uri);
             }
             return;
@@ -114,6 +111,7 @@ module.exports = function(grunt) {
             replacement = datauri(needle);
 
             if (!options.log || options.log.processBinaryFileEncoded !== false) {
+              printHead()
               grunt.log.ok('Encode: ' + needle);
             }
           }
@@ -123,11 +121,13 @@ module.exports = function(grunt) {
             replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
 
             if (!options.log || options.log.processBinaryFileAdjusted !== false) {
+              printHead()
               grunt.log.ok('Adjust: ' + uri + ' -> ' + replacement);
             }
           } else {
             replacement = uri;
             if (!options.log || options.log.processBinaryFileIgnored !== false) {
+              printHead()
               (options.exitOnError === true ? grunt.fail.warn : grunt.log.ok)('Ignore: ' + uri);
             }
           }
@@ -140,13 +140,7 @@ module.exports = function(grunt) {
       // Revert base to gruntjs executing current dir
       grunt.file.setBase(gruntfileDir);
       grunt.file.write(outputTo, content);
-      if (
-          !options.log ||
-          options.log.processBinaryFileTooBig !== false ||
-          options.log.processBinaryFileEncoded !== false ||
-          options.log.processBinaryFileAdjusted !== false ||
-          options.log.processBinaryFileIgnored !== false
-      ) {
+      if (headPrinted) {
         grunt.log.ok('=> ' + outputTo);
       }
     });
