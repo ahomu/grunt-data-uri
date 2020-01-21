@@ -102,7 +102,7 @@ module.exports = function(grunt) {
           if (options.maxBytes && fileSize > options.maxBytes) {
             // file is over the max size
             if (!options.log || options.log.processBinaryFileTooBig !== false) {
-              printHead()
+              printHead();
               grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes + '): ' + uri);
             }
             return;
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
             replacement = datauri(needle);
 
             if (!options.log || options.log.processBinaryFileEncoded !== false) {
-              printHead()
+              printHead();
               grunt.log.ok('Encode: ' + needle);
             }
           }
@@ -121,13 +121,13 @@ module.exports = function(grunt) {
             replacement = adjustDirectoryLevel(fixedUri, destDir, baseDir);
 
             if (!options.log || options.log.processBinaryFileAdjusted !== false) {
-              printHead()
+              printHead();
               grunt.log.ok('Adjust: ' + uri + ' -> ' + replacement);
             }
           } else {
             replacement = uri;
             if (!options.log || options.log.processBinaryFileIgnored !== false) {
-              printHead()
+              printHead();
               (options.exitOnError === true ? grunt.fail.warn : grunt.log.ok)('Ignore: ' + uri);
             }
           }
