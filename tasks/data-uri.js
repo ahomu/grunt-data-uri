@@ -29,9 +29,11 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('dataUri', 'Convert your css file image path!!', function() {
 
-    var options  = this.options(),
-        srcFiles = expandFiles(this.data.src),
-        destDir  = path.resolve(this.data.dest),
+    var options       = this.options(),
+        srcFiles      = expandFiles(this.data.src),
+        destDir       = path.resolve(this.data.dest),
+        copyOversizedFolder = options.copyOversizedFolder || this.data.dest,
+        copyOversizedPathPrefix = options.copyOversizedPathPrefix || '',
         haystack = [];
 
     expandFiles(options.target).forEach(function(imgPath) {
@@ -100,12 +102,22 @@ module.exports = function(grunt) {
           // check if file exceeds the max bytes
           var fileSize = getFileSize(needle);
           if (options.maxBytes && fileSize > options.maxBytes) {
-            // file is over the max size
-            if (!options.log || options.log.processBinaryFileTooBig !== false) {
-              printHead();
-              grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes + '): ' + uri);
+            if (options.copyOversized) {
+                if (!options.log || options.log.processBinaryCopiedFiles !== false) {
+                  printHead();
+                  grunt.log.ok('Copied (size ' + fileSize + ' > ' + options.maxBytes + '): ' + uri + ' to ' + copyOversizedFolder);
+                }
+              fs.mkdirSync(copyOversizedFolder, { recursive: true });
+              fs.copyFileSync(needle, path.resolve(copyOversizedFolder)+'/'+path.basename(needle))
+              replacement = copyOversizedPathPrefix + path.basename(fixedUri);
+            } else {
+              // file is over the max size
+              if (!options.log || options.log.processBinaryFileTooBig !== false) {
+                printHead();
+                grunt.log.ok('Skipping (size ' + fileSize + ' > ' + options.maxBytes + '): ' + uri);
+              }
+              return;
             }
-            return;
           } else {
             // Encoding to Data uri
             replacement = datauri(needle);
@@ -126,7 +138,7 @@ module.exports = function(grunt) {
             }
           } else {
             replacement = uri;
-            if (!options.log || options.log.processBinaryFileIgnored !== false) {
+            if (!options.log || options.log.processBinaryFileIgnored !== false || options.exitOnError === true) {
               printHead();
               (options.exitOnError === true ? grunt.fail.warn : grunt.log.ok)('Ignore: ' + uri);
             }

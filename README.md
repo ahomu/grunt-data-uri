@@ -1,6 +1,6 @@
 # grunt-data-uri
 
-[![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
+[![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url]
 
 This is [gruntplugin](http://gruntjs.com) task.
 
@@ -56,7 +56,13 @@ grunt.initConfig({
         },
 
         // Generates an error when a file is ignored
-        exitOnError: false
+        exitOnError: false,
+
+        prefixByNumber: false, // prefix the name of all file names processed by an incremental number
+
+        copyOversized: true, // copy file in specified folder when its size exceeds maxBytes
+        copyOversizedFolder: 'sample/css', // specified folder, default value is same of 'dest'
+        copyOversizedPathPrefix: '', // prefix for css files ex: url('copyOversizedPathPrefix/filename.ext')
 
       }
     }
