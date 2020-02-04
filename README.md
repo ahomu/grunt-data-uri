@@ -1,4 +1,4 @@
-# grunt-data-uri
+# grunt-data-uri-advenced
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url]
 
@@ -11,13 +11,13 @@ This is [gruntplugin](http://gruntjs.com) task.
 Install from npm.
 
 ```
-% npm i -D grunt-data-uri
+% npm i -D grunt-data-uri-advenced
 ```
 
 Add your project's `Gruntfile.js`.
 
 ```javascript
-grunt.loadNpmTasks('grunt-data-uri');
+grunt.loadNpmTasks('grunt-data-uri-advenced');
 ```
 
 ## Example
@@ -84,7 +84,7 @@ div  { background-image: url('../../img/not_encode.png'); }
 
 ### Execute
 
-Execute grunt-data-uri
+Execute grunt-data-uri-advenced
 
 ```
 % grunt dataUri
