@@ -1,6 +1,6 @@
 {
-  "name": "grunt-data-uri",
-  "version": "0.3.1",
+  "name": "grunt-data-uri-v2",
+  "version": "0.3.2",
   "description": "Convert to data-uri from image path.",
   "license": "MIT",
   "keywords": [
@@ -10,17 +10,17 @@
     "base64",
     "encode"
   ],
-  "homepage": "https://github.com/ahomu/grunt-data-uri",
-  "bugs": "https://github.com/ahomu/grunt-data-uri/issues",
+  "homepage": "https://github.com/Hoax017/grunt-data-uri",
+  "bugs": "https://github.com/Hoax017/grunt-data-uri/issues",
   "author": {
-    "name": "Ayumu Sato",
-    "email": "mail@ayumusato.com",
-    "url": "http://aho.mu"
+    "name": "Hoax017",
+    "email": "contact@aymericdev.fr",
+    "url": "https://aymericdev.fr"
   },
   "main": "Gruntfile.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ahomu/grunt-data-uri.git"
+    "url": "https://github.com/Hoax017/grunt-data-uri"
   },
   "scripts": {
     "test": "grunt && node test/assertion.js",
