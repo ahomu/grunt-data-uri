@@ -1,6 +1,6 @@
-# grunt-data-uri
+# grunt-data-uri-advanced
 
-[![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
+[![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url]
 
 This is [gruntplugin](http://gruntjs.com) task.
 
@@ -11,13 +11,13 @@ This is [gruntplugin](http://gruntjs.com) task.
 Install from npm.
 
 ```
-% npm i -D grunt-data-uri
+% npm i -D grunt-data-uri-advanced
 ```
 
 Add your project's `Gruntfile.js`.
 
 ```javascript
-grunt.loadNpmTasks('grunt-data-uri');
+grunt.loadNpmTasks('grunt-data-uri-advanced');
 ```
 
 ## Example
@@ -44,7 +44,25 @@ grunt.initConfig({
         // Do not inline any images larger
         // than this size. 2048 is a size
         // recommended by Google's mod_pagespeed.
-        maxBytes : 2048
+        maxBytes : 2048,
+
+        // Control the output of the script
+        log: {
+            skipped: true,
+            processBinaryFileTooBig: true,
+            processBinaryFileEncoded: true,
+            processBinaryFileAdjusted: true,
+            processBinaryFileIgnored: true
+        },
+
+        // Generates an error when a file is ignored
+        exitOnError: false,
+
+        prefixByNumber: false, // prefix the name of all file names processed by an incremental number
+
+        copyOversized: true, // copy file in specified folder when its size exceeds maxBytes
+        copyOversizedFolder: 'sample/css', // specified folder, default value is same of 'dest'
+        copyOversizedPathPrefix: '', // prefix for css files ex: url('copyOversizedPathPrefix/filename.ext')
 
       }
     }
@@ -66,7 +84,7 @@ div  { background-image: url('../../img/not_encode.png'); }
 
 ### Execute
 
-Execute grunt-data-uri
+Execute grunt-data-uri-advanced
 
 ```
 % grunt dataUri
